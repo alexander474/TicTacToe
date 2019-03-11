@@ -24,24 +24,17 @@ class HighScoreFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val userModel = UserModel(activity!!.application)
-
-        val users: ArrayList<UserEntity> = ArrayList()
-
-
-        //userModel.getAllUsers(users)
-
-
-        userModel.allUsersLive.observe(this, Observer { value ->
-            value?.forEach { users.add(it) }
-        })
-
-
-
         recyclerView = view.findViewById(R.id.highscoore_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = UsersAdapter(users)
+        val userModel = UserModel(activity!!.application)
 
+
+        // Appends all the users in the UsersAdapter to the recyclerView
+        userModel.allUsersLive.observe(this, Observer { liveData ->
+            liveData?.let { data ->
+                recyclerView.adapter = UsersAdapter(data.toCollection(ArrayList()))
+            }
+        })
 
     }
 
