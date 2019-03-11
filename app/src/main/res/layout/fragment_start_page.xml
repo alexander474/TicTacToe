@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_gravity="center"
+             android:background="@color/colorPrimary">
+
+    <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start">
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/playerOne"
+                android:ems="10"
+                android:id="@+id/player1"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start">
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/playerTwo"
+                android:ems="10"
+                android:id="@+id/player2"
+                android:layout_height="wrap_content"/>
+        <CheckBox
+                android:text="@string/BOT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/enableBot"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+        <Button
+                android:text="HIGHSCORE"
+                android:layout_width="30pt"
+                android:layout_height="20pt"
+                android:background="@android:color/white"
+                android:layout_margin="5pt"
+                android:id="@+id/buHighscoore"/>
+        <Button
+                android:text="START"
+                android:layout_width="30pt"
+                android:layout_height="20pt"
+                android:background="@android:color/white"
+                android:layout_margin="5pt"
+                android:id="@+id/buStart"/>
+    </TableRow>
+
+</TableLayout>

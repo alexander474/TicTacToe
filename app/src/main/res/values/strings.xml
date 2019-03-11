@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TicTacToeV02</string>
+    <string name="BOT">BOT</string>
+    <string name="BOT_NAME">TTTBOT</string>
+    <string name="playerOne">Player1</string>
+    <string name="playerTwo">Player2</string>
+    <string name="playerOneChar">X</string>
+    <string name="playerTwoChar">O</string>
+    <string name="highScoreColOne">NAME</string>
+    <string name="highScoreColTwo">WIN</string>
+    <string name="highScoreColThree">DRAW</string>
+    <string name="highScoreColFour">LOOSE</string>
+</resources>
