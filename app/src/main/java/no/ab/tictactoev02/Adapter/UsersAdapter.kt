@@ -16,7 +16,7 @@ class UsersAdapter(val users: ArrayList<UserEntity>) : RecyclerView.Adapter<User
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = "("+users[position].id+") "+users[position].name
+        holder.name.text = users[position].name
         holder.win.text = users[position].win.toString()
         holder.draw.text = users[position].draw.toString()
         holder.loose.text = users[position].loose.toString()

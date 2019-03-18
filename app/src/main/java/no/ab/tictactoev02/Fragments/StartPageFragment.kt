@@ -1,6 +1,5 @@
 package no.ab.tictactoev02
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import no.ab.tictactoev02.Fragments.GameFragment
+import no.ab.tictactoev02.Fragments.HighScoreFragment
 
 class StartPageFragment : Fragment() {
 
@@ -59,7 +60,9 @@ class StartPageFragment : Fragment() {
     }
 
     private fun startHighScore(){
-        (activity as MainActivity).replaceFragment(R.id.fragment_container, HighScoreFragment())
+        (activity as MainActivity).replaceFragment(R.id.fragment_container,
+            HighScoreFragment()
+        )
     }
 
     private fun startGame(){
