@@ -1,21 +1,17 @@
-package no.ab.tictactoev02
+package no.ab.tictactoev02.Fragments
 
-import android.app.Activity
-import android.app.Application
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_start_page.*
-import kotlinx.coroutines.awaitAll
-import no.ab.tictactoev02.IO.UserEntity
 import no.ab.tictactoev02.IO.UserModel
+import no.ab.tictactoev02.R
+import no.ab.tictactoev02.Adapter.UsersAdapter
 
-class HighScoreFragment : Fragment() {
+class HighScoreFragment : FragmentHandler() {
 
     private lateinit var recyclerView: RecyclerView
 

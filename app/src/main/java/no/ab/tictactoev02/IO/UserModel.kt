@@ -21,9 +21,7 @@ class UserModel(application: Application) : AndroidViewModel(application){
     }
 
 
-    fun getUser(name: String) = scope.launch(Dispatchers.IO){
-        repository.getUser(name)
-    }
+    //suspend fun getUser(name: String) = scope.
 
 
     fun getAllUsers(list: ArrayList<UserEntity>) = scope.launch(Dispatchers.IO) {

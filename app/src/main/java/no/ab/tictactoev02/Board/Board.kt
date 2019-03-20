@@ -6,7 +6,6 @@ package no.ab.tictactoev02.Board
 class Board(private val startingPlayer: Int = 1){
 
     var fields = Array(9) {0}
-    private val timer = Timer()
     var activePlayer = startingPlayer
     var gameStarted = false
     var isFullBoard = false
@@ -15,31 +14,51 @@ class Board(private val startingPlayer: Int = 1){
     var winner = -1
     var looser = -1
 
+    // Posible ways of winning the game
+    val posibleWinningCoordinates: Array<Array<Int>> = arrayOf(
+        arrayOf(0,1,2),
+        arrayOf(3,4,5),
+        arrayOf(6,7,8),
+        arrayOf(0,3,6),
+        arrayOf(2,5,8),
+        arrayOf(1,4,7),
+        arrayOf(2,4,6),
+        arrayOf(0,4,8)
+    )
 
+
+    /**
+     * Moves/takes a field in the game
+     */
     fun move(cellID: Int){
-        if(!gameStarted) timer.startTimer()
-
         if(!isWinner && !isDraw && !isFullBoard && !checkIfMoveIsTaken(cellID)) {
             moveLogic(cellID)
         }
     }
 
+    /**
+     * Checks if the move the player has made is taken
+     * @return false false if the field is not taken/empty
+     */
     private fun checkIfMoveIsTaken(cellID: Int): Boolean{
-        if(cellID<=0 || cellID>=9) return false
+        //checks if the move is outside the board
+        if(cellID<0 || cellID>=9) return true
         return fields[cellID] != 0
     }
 
 
+    /**
+     * Adds the move, checks the results and changes player
+     */
     private fun moveLogic(cellID: Int){
         if (activePlayer == 1) {
             fields[cellID] = activePlayer
-            fullResultCheck()
             activePlayer = 2
         } else {
             fields[cellID] = activePlayer
-            fullResultCheck()
             activePlayer = 1
         }
+        fullResultCheck()
         print("\n[")
         fields.forEach { e -> print("${e}, ") }
         print("]")
@@ -47,9 +66,7 @@ class Board(private val startingPlayer: Int = 1){
 
     fun restartBoard(){
         fields = Array(9) {0}
-        timer.stopTimer()
-        timer.restartTimer()
-        activePlayer = startingPlayer
+        //activePlayer = startingPlayer
         gameStarted = false
         isFullBoard = false
         isDraw = false
@@ -84,14 +101,9 @@ class Board(private val startingPlayer: Int = 1){
 
     private fun checkFieldsForWinner(playerID: Int){
         if(getPlayerFieldsSize(1)>=3 || getPlayerFieldsSize(2)>=3) {
-            if(checkRow(playerID, 0,1,2)) setResultFields(playerID)
-            else if(checkRow(playerID, 3,4,5)) setResultFields(playerID)
-            else if(checkRow(playerID, 6,7,8)) setResultFields(playerID)
-            else if(checkRow(playerID, 0,3,6)) setResultFields(playerID)
-            else if(checkRow(playerID, 1,4,7)) setResultFields(playerID)
-            else if(checkRow(playerID, 2,5,8)) setResultFields(playerID)
-            else if(checkRow(playerID, 0,4,8)) setResultFields(playerID)
-            else if(checkRow(playerID, 2,4,6)) setResultFields(playerID)
+            for(posible in posibleWinningCoordinates){
+                if(checkRow(playerID, posible[0], posible[1], posible[2])) setResultFields(playerID)
+            }
         }
     }
 
@@ -102,6 +114,9 @@ class Board(private val startingPlayer: Int = 1){
         return fields[valueOne] == playerID && fields[valueTwo] == playerID && fields[valueThree] == playerID
     }
 
+    /**
+     * Sets the winner to true, sets winner to right playerID and looser to right playerID
+     */
     private fun setResultFields(winPlayer: Int){
         isWinner = true
         winner = winPlayer

@@ -1,33 +1,37 @@
-package no.ab.tictactoev02
+package no.ab.tictactoev02.Fragments
 
 import android.graphics.Color
-import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import no.ab.tictactoev02.Board.BOT.Bot
+import no.ab.tictactoev02.Board.BOT.EasyBot
 import no.ab.tictactoev02.Board.Board
-import no.ab.tictactoev02.Board.Bot
-import no.ab.tictactoev02.IO.UserEntity
+import no.ab.tictactoev02.Board.BOT.HardBot
 import no.ab.tictactoev02.IO.UserModel
-import java.util.ArrayList
+import no.ab.tictactoev02.Player
+import no.ab.tictactoev02.R
 
-class GameFragment : Fragment() {
+class GameFragment : FragmentHandler() {
 
     lateinit var board: Board
     lateinit var bot: Bot
     lateinit var gameStatus: TextView
     lateinit var timeCounter: TextView
     lateinit var buRestart: Button
-    lateinit var buBack: Button
     lateinit var buHint: Button
     lateinit var buttons: Array<Button>
+
+    //Determines if a button is hinted, if not -1
     var hintedButtonID = -1
+    lateinit var userModel: UserModel
 
     lateinit var player1: Player
     lateinit var player2: Player
+    lateinit var difficulty: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_game, container, false)
@@ -36,31 +40,38 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userModel = UserModel(activity!!.application)
         initButtons(view)
         initPlayers()
         board = Board(1)
-        if(player2.isBot) bot = Bot(board)
+
+        //If player two is bot, then set the bot field
+        if(player2.isBot) {
+            when(difficulty){
+                "EASY" -> EasyBot()
+                "MEDIUM" -> HardBot()
+                "HARD" -> HardBot()
+            }
+            bot = HardBot()
+        }else{
+            buttonIdentityChange(buHint, getString(R.string.buttonHintText), Color.GRAY, true)
+        }
 
 
         buHint.setOnClickListener {
             setHintButton()
         }
 
-        buBack.setOnClickListener {
-            handleReset()
-            (activity as MainActivity).replaceFragment(R.id.fragment_container, StartPageFragment())
-        }
-
         buRestart.setOnClickListener { handleReset() }
 
         /**
          * Listens to click on a field
-         * If Bot exists then launch bot after user has clicked
+         * If EasyBot exists then launch bot after user has clicked
          */
         val buListener = View.OnClickListener { v ->
             removeHintButton()
             handleBoardLogic(v as Button)
-            if(getPlayer(board.activePlayer).isBot){ handleBotMove() }
+            if(getPlayer(board.activePlayer).isBot && !(board.isWinner || board.isDraw)){ handleBotMove() }
         }
 
         // attaches the listener to each button that represents field
@@ -71,15 +82,18 @@ class GameFragment : Fragment() {
 
 
     private fun handleBoardLogic(clickedButton: Button){
+        // Sets the clicked button to not enabled and the color to the players color
         buttonIdentityChange(clickedButton, getPlayer(board.activePlayer).playerChar, getPlayerButtonColor(), false)
         board.move(getButtonCellID(clickedButton))
 
         if (board.isWinner || board.isFullBoard || board.isDraw) handleEndGame()
+
+        // Displays the next moving player
         if(!board.isWinner && !board.isFullBoard && !board.isDraw) updateGameStatusText("Next: ${getPlayer(board.activePlayer).name}")
     }
 
     private fun handleBotMove(){
-        val fieldID = Bot(board).drawNewField()
+        val fieldID = bot.run(board.fields)
         handleBoardLogic(buttons[fieldID])
     }
 
@@ -94,10 +108,18 @@ class GameFragment : Fragment() {
         insertResultToDatabase()
     }
 
+    /**
+     * Inserts the result
+     * If the user already exists then update with either win, draw, loose
+     * If the user dosen't exist, then create it and set either win, draw loose
+     */
     private fun insertResultToDatabase() {
-        val userModel = UserModel(activity!!.application)
+        //val userOne = userModel.getUser("Alexadner")
+        //println(userOne.name)
         //var userOne = userModel.getUser(us)
         if(board.isWinner){
+            val winningPlayer = getPlayer(board.winner)
+            val loosingPlayer = getPlayer(board.looser)
 
         }
         else if(board.isDraw){
@@ -105,36 +127,58 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun getPlayer(playerNum: Int): Player {
-            if (playerNum == 1) {
+
+    /**
+     * @param playerID The player that will be returned as a Player()
+     * @return the player matching that playerID
+     */
+    private fun getPlayer(playerID: Int): Player {
+            if (playerID == 1) {
                 return player1
             } else {
                 return player2
             }
     }
 
+    /**
+     * Sets hinted button in the game, based on the bot logic
+     * Hint is only enabled when playing against bot
+     */
     private fun setHintButton(){
-        hintedButtonID = Bot(board).drawNewField()
-        if(hintedButtonID != -1 && hintedButtonID<=buttons.size-1) {
-            val button = buttons[hintedButtonID]
-            buttonIdentityChange(button, "", Color.YELLOW, true)
+        if(player2.isBot){
+            hintedButtonID = bot.run(board.fields)
+            if(hintedButtonID != -1 && hintedButtonID<=buttons.size-1) {
+                val button = buttons[hintedButtonID]
+                buttonIdentityChange(button, "", Color.YELLOW, true)
+            }
         }
     }
 
+    /**
+     * Removes the hinted button in the game
+     */
     private fun removeHintButton(){
-        if(hintedButtonID != -1 && hintedButtonID>buttons.size-1){
+        if(hintedButtonID != -1){
             val button = buttons[hintedButtonID]
             button.setBackgroundColor(Color.WHITE)
         }
     }
 
 
+    /**
+     * Updates the status text in the game
+     * @param message The text that will be displayed
+     */
     private fun updateGameStatusText(message: String) {
             gameStatus.text = ""
             gameStatus.append(message)
     }
 
 
+    /**
+     * Displays the result when it's either win or draw.
+     * If there is a winner, display the winning player
+     */
     private fun setResultGameStatusText(){
             var result = ""
             if(board.isWinner) result = "Winner: ${getPlayer(board.winner).name}"
@@ -142,6 +186,9 @@ class GameFragment : Fragment() {
             updateGameStatusText(result)
     }
 
+    /**
+     * Resets the board to it initial state
+     */
     private fun handleReset(){
         board.restartBoard()
         buttons.forEach {
@@ -149,6 +196,9 @@ class GameFragment : Fragment() {
         }
         buHint.isEnabled = true
         updateGameStatusText("Starting: ${getPlayer(board.activePlayer).name}")
+        if(board.activePlayer==2 && player2.isBot){
+            handleBotMove()
+        }
     }
 
     /**
@@ -193,14 +243,15 @@ class GameFragment : Fragment() {
      * Initializes the players
      */
     private fun initPlayers(){
-        var player1Text = arguments!!.getString("player1")
-        var player2Text = arguments!!.getString("player2")
-        var player1Char = arguments!!.getString("player1Char")
-        var player2Char = arguments!!.getString("player2Char")
+        var playerOneName = arguments!!.getString("playerOneName")
+        var playerTwoName = arguments!!.getString("playerTwoName")
+        var playerOneChar = arguments!!.getString("playerOneChar")
+        var playerTwoChar = arguments!!.getString("playerTwoChar")
         var isBot = arguments!!.getBoolean("isBot", true)
+        difficulty = arguments!!.getString("difficulty")
 
-        player1 = Player(player1Text, player1Char, ArrayList())
-        player2 = Player(player2Text, player2Char, ArrayList(), isBot)
+        player1 = Player(playerOneName, playerOneChar)
+        player2 = Player(playerTwoName, playerTwoChar, isBot)
     }
 
 
@@ -212,7 +263,6 @@ class GameFragment : Fragment() {
             timeCounter = view.findViewById(R.id.timeCounter)
             timeCounter.text = "00:00"
             buRestart = view.findViewById(R.id.buRestart)
-            buBack = view.findViewById(R.id.buBack)
             buHint = view.findViewById(R.id.buHint)
 
             buttons = arrayOf(

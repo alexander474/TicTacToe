@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="highScoreColOne">NAME</string>
+    <string name="highScoreColTwo">WIN</string>
+    <string name="highScoreColThree">DRAW</string>
+    <string name="highScoreColFour">LOOSE</string>
+    <string name="buttonBackText">BACK</string>
+    <string name="buttonHintText">HINT?</string>
+    <string name="buttonRestartText">RESTART</string>
+    <string name="buttonStartText">START</string>
+    <string name="buttonHighscoreText">HIGHSCORE</string>
+    <string name="difficultDialogText">Pick a difficulty</string>
+    <string-array name="difficultyDialogModes">
+        <item>EASY</item>
+        <item>MEDIUM</item>
+        <item>HARD</item>
+    </string-array>
 </resources>

@@ -1,4 +1,4 @@
-package no.ab.tictactoev02
+package no.ab.tictactoev02.Adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import no.ab.tictactoev02.IO.UserEntity
+import no.ab.tictactoev02.R
 
 class UsersAdapter(val users: ArrayList<UserEntity>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 

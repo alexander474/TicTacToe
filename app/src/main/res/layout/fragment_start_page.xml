@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_gravity="center"
              android:background="@color/colorPrimary">
+    <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp">
 
+
+        <TextView
+                android:text="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:id="@+id/logoText"
+                android:textSize="70sp"
+                android:textAlignment="center"/>
+    </TableRow>
     <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -13,8 +29,10 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHint="@color/colorPrimaryText"
                 android:inputType="textPersonName"
-                android:hint="@string/playerOne"
+                android:hint="@string/playerOneName"
                 android:ems="10"
                 android:id="@+id/player1"/>
     </TableRow>
@@ -26,32 +44,38 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="@string/playerTwo"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHint="@color/colorPrimaryText"
+                android:hint="@string/playerTwoName"
                 android:ems="10"
                 android:id="@+id/player2"
                 android:layout_height="wrap_content"/>
-        <CheckBox
-                android:text="@string/BOT"
+        <Switch
+                android:id="@+id/enableBot"
+                android:textColor="@color/colorPrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/enableBot"/>
+                android:text="@string/BOT"
+                android:textAlignment="center"
+        />
     </TableRow>
     <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end">
         <Button
-                android:text="HIGHSCORE"
+                android:text="@string/buttonHighscoreText"
                 android:layout_width="30pt"
                 android:layout_height="20pt"
-                android:background="@android:color/white"
+                android:background="@color/colorPrimaryButton"
                 android:layout_margin="5pt"
                 android:id="@+id/buHighscoore"/>
+
         <Button
-                android:text="START"
+                android:text="@string/buttonStartText"
                 android:layout_width="30pt"
                 android:layout_height="20pt"
-                android:background="@android:color/white"
+                android:background="@color/colorPrimaryButton"
                 android:layout_margin="5pt"
                 android:id="@+id/buStart"/>
     </TableRow>
