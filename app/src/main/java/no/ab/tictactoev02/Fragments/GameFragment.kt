@@ -14,6 +14,7 @@ import no.ab.tictactoev02.Board.BOT.HardBot
 import no.ab.tictactoev02.IO.UserModel
 import no.ab.tictactoev02.Player
 import no.ab.tictactoev02.R
+import no.ab.tictactoev02.Timer
 
 class GameFragment : FragmentHandler() {
 
@@ -33,6 +34,9 @@ class GameFragment : FragmentHandler() {
     lateinit var player2: Player
     lateinit var difficulty: String
 
+    private lateinit var timer: Timer
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_game, container, false)
     }
@@ -40,6 +44,7 @@ class GameFragment : FragmentHandler() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        timer = Timer(view)
         userModel = UserModel(activity!!.application)
         initButtons(view)
         initPlayers()
@@ -56,7 +61,6 @@ class GameFragment : FragmentHandler() {
         }else{
             buttonIdentityChange(buHint, getString(R.string.buttonHintText), Color.GRAY, true)
         }
-
 
         buHint.setOnClickListener {
             setHintButton()
@@ -81,7 +85,11 @@ class GameFragment : FragmentHandler() {
     }
 
 
+    /**
+     * @param clickedButton The button/field on the board that is clicked
+     */
     private fun handleBoardLogic(clickedButton: Button){
+        if(!board.gameStarted) timer.startTimer()
         // Sets the clicked button to not enabled and the color to the players color
         buttonIdentityChange(clickedButton, getPlayer(board.activePlayer).playerChar, getPlayerButtonColor(), false)
         board.move(getButtonCellID(clickedButton))
@@ -91,6 +99,7 @@ class GameFragment : FragmentHandler() {
         // Displays the next moving player
         if(!board.isWinner && !board.isFullBoard && !board.isDraw) updateGameStatusText("Next: ${getPlayer(board.activePlayer).name}")
     }
+
 
     private fun handleBotMove(){
         val fieldID = bot.run(board.fields)
@@ -102,6 +111,7 @@ class GameFragment : FragmentHandler() {
      * Displays the result
      */
     private fun handleEndGame(){
+        timer.stopTimer()
         buHint.isEnabled = false
         buttons.forEach { b -> b.isEnabled = false }
         setResultGameStatusText()
@@ -190,6 +200,7 @@ class GameFragment : FragmentHandler() {
      * Resets the board to it initial state
      */
     private fun handleReset(){
+        timer.stopTimer()
         board.restartBoard()
         buttons.forEach {
             buttonIdentityChange(it, "", Color.WHITE, true)
@@ -277,6 +288,24 @@ class GameFragment : FragmentHandler() {
                 view.findViewById(R.id.bu9)
             )
     }
+
+    /**
+     * To make sure that the timer is set on hold/pause when the user is setting the app on pause
+     */
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+
+    /**
+     * To make sure that the timer resuming after being set on a pause
+     */
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
 
 
 

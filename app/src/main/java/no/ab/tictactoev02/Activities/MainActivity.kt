@@ -1,5 +1,6 @@
 package no.ab.tictactoev02.Activities
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import no.ab.tictactoev02.Fragments.StartPageFragment
@@ -12,6 +13,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         loadFragment()
     }
+
+
 
 
     /**

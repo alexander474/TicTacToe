@@ -2,8 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_gravity="center"
-             android:background="@color/colorPrimary">
+             android:layout_gravity="center">
     <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -16,7 +15,6 @@
                 android:text="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryText"
                 android:id="@+id/logoText"
                 android:textSize="70sp"
                 android:textAlignment="center"/>
@@ -29,8 +27,6 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryText"
-                android:textColorHint="@color/colorPrimaryText"
                 android:inputType="textPersonName"
                 android:hint="@string/playerOneName"
                 android:ems="10"
@@ -44,15 +40,12 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:inputType="textPersonName"
-                android:textColor="@color/colorPrimaryText"
-                android:textColorHint="@color/colorPrimaryText"
                 android:hint="@string/playerTwoName"
                 android:ems="10"
                 android:id="@+id/player2"
                 android:layout_height="wrap_content"/>
         <Switch
                 android:id="@+id/enableBot"
-                android:textColor="@color/colorPrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/BOT"
@@ -67,7 +60,6 @@
                 android:text="@string/buttonHighscoreText"
                 android:layout_width="30pt"
                 android:layout_height="20pt"
-                android:background="@color/colorPrimaryButton"
                 android:layout_margin="5pt"
                 android:id="@+id/buHighscoore"/>
 
@@ -75,7 +67,6 @@
                 android:text="@string/buttonStartText"
                 android:layout_width="30pt"
                 android:layout_height="20pt"
-                android:background="@color/colorPrimaryButton"
                 android:layout_margin="5pt"
                 android:id="@+id/buStart"/>
     </TableRow>

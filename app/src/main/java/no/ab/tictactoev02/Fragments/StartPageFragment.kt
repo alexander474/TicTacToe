@@ -1,7 +1,9 @@
 package no.ab.tictactoev02.Fragments
 
+import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
 import no.ab.tictactoev02.R
+import no.ab.tictactoev02.Timer
 
 class StartPageFragment : FragmentHandler() {
 
@@ -34,7 +37,7 @@ class StartPageFragment : FragmentHandler() {
 
 
         enableBot.setOnCheckedChangeListener{ buttonView, isChecked ->
-            enabledBotHandler(isChecked)
+            enabledBotHandler(view, isChecked)
         }
 
         buHighscore.setOnClickListener(buListner)
@@ -50,15 +53,13 @@ class StartPageFragment : FragmentHandler() {
         }
     }
 
-    private fun enabledBotHandler(isChecked: Boolean){
+    private fun enabledBotHandler(view: View, isChecked: Boolean){
         if (isChecked){
             player2.isEnabled = false
             player2.text.clear()
             player2.append(getString(R.string.BOT_NAME))
             isBot = true
-            val dialog  = DifficultyDialog()
-            dialog.setTargetFragment(this, 200)
-            dialog.show(fragmentManager, "difficultDialog")
+            difficultyAlert(view)
 
         }else{
             player2.isEnabled = true
@@ -66,6 +67,17 @@ class StartPageFragment : FragmentHandler() {
             player2.append(getString(R.string.playerTwoName))
             isBot = false
         }
+    }
+
+    fun difficultyAlert(view: View){
+        val items = resources.getStringArray(R.array.difficultyDialogModes)
+        val builder = AlertDialog.Builder(view.context)
+        builder.setTitle(R.string.difficultDialogText)
+            .setItems(items,
+                DialogInterface.OnClickListener { dialog, which ->
+                    difficulty = items.get(which)
+                })
+        builder.create().show()
     }
 
 

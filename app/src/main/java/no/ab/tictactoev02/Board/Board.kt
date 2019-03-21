@@ -31,6 +31,7 @@ class Board(private val startingPlayer: Int = 1){
      * Moves/takes a field in the game
      */
     fun move(cellID: Int){
+        gameStarted = true
         if(!isWinner && !isDraw && !isFullBoard && !checkIfMoveIsTaken(cellID)) {
             moveLogic(cellID)
         }

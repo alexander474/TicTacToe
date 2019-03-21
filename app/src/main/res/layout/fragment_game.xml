@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:gravity="center"
-             android:background="@color/colorPrimary">
+             >
 
     <TableRow
             android:layout_width="match_parent"
@@ -11,12 +11,11 @@
             android:gravity="end"
             android:layout_marginBottom="5pt">
 
-        <TextView
-                android:layout_width="match_parent"
+        <Chronometer
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textSize="15pt"
-                android:textColor="@color/colorPrimaryText"
                 android:id="@+id/timeCounter"/>
     </TableRow>
     <TableRow
@@ -28,7 +27,6 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryText"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:textSize="15pt"
@@ -42,7 +40,7 @@
                  android:gravity="center"
                  android:paddingStart="15dp"
                  android:paddingEnd="15dp"
-                 android:background="@color/colorPrimary">
+                 >
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,7 +49,6 @@
                     android:text="@string/buttonHintText"
                     android:layout_width="30pt"
                     android:layout_height="20pt"
-                    android:background="@color/colorPrimaryButton"
                     android:layout_margin="5pt"
                     android:layout_weight="1"
                     android:id="@+id/buHint"/>
@@ -59,7 +56,6 @@
                     android:text="@string/buttonRestartText"
                     android:layout_width="30pt"
                     android:layout_height="20pt"
-                    android:background="@color/colorPrimaryButton"
                     android:layout_margin="5pt"
                     android:layout_weight="1"
                     android:id="@+id/buRestart"/>

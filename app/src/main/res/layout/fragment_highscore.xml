@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:gravity="center"
-             android:background="@color/colorPrimary">
+             >
     <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
@@ -16,7 +16,6 @@
         <TextView
                 android:id="@+id/highscore_col_name"
                 android:text="@string/highScoreColOne"
-                android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -24,7 +23,6 @@
         <TextView
                 android:id="@+id/highscore_col_win"
                 android:text="@string/highScoreColTwo"
-                android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -32,7 +30,6 @@
         <TextView
                 android:id="@+id/highscore_col_draw"
                 android:text="@string/highScoreColThree"
-                android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -40,7 +37,6 @@
         <TextView
                 android:id="@+id/highscore_col_loose"
                 android:text="@string/highScoreColFour"
-                android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
