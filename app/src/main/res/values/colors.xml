@@ -8,4 +8,12 @@
     <color name="colorPrimaryButtonDark">#FF9F1C</color>
     <color name="colorPrimaryTextDark">#FFFFFF</color>
 
+
+    <color name="colorBoardButtonDefault">#FFFFFF</color>
+    <color name="colorBoardButtonPlayerOne">#009193</color>
+    <color name="colorBoardButtonPlayerTwo">#FF9300</color>
+
+    <color name="colorButtonDisabled">#AAAAAA</color>
+    <color name="colorButtonHint">#AAAAAA</color>
+
 </resources>

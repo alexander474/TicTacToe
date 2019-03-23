@@ -14,7 +14,7 @@ class UserRepository(private val userDAO: UserDAO){
     }
 
     @WorkerThread
-    suspend fun getAll(): List<UserEntity>{
+    fun getAll(): List<UserEntity>{
         return userDAO.getAllUsers()
     }
 

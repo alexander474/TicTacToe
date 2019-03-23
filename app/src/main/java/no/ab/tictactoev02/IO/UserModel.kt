@@ -3,6 +3,7 @@ package no.ab.tictactoev02.IO
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.os.AsyncTask
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -21,12 +22,10 @@ class UserModel(application: Application) : AndroidViewModel(application){
     }
 
 
-    //suspend fun getUser(name: String) = scope.
-
-
     fun getAllUsers(list: ArrayList<UserEntity>) = scope.launch(Dispatchers.IO) {
         repository.getAll().forEach { u -> list.add(u) }
     }
+
 
 
 
@@ -45,4 +44,5 @@ class UserModel(application: Application) : AndroidViewModel(application){
     fun deleteAll() = scope.launch(Dispatchers.IO) {
         repository.deleteAll()
     }
+
 }

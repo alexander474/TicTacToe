@@ -3,14 +3,16 @@
 
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorBackground">@color/colorPrimaryBackgroundLight</item>
-        <item name="android:button">@color/colorPrimaryButtonLight</item>
+        <item name="colorButtonNormal">@color/colorPrimaryButtonLight</item>
         <item name="android:textColor">@color/colorPrimaryTextLight</item>
+        <item name="android:textColorHint">@color/colorPrimaryTextLight</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorBackground">@color/colorPrimaryBackgroundDark</item>
-        <item name="android:button">@color/colorPrimaryButtonDark</item>
+        <item name="colorButtonNormal">@color/colorPrimaryButtonDark</item>
         <item name="android:textColor">@color/colorPrimaryTextDark</item>
+        <item name="android:textColorHint">@color/colorPrimaryTextDark</item>
     </style>
 
 

@@ -59,7 +59,7 @@ class GameFragment : FragmentHandler() {
             }
             bot = HardBot()
         }else{
-            buttonIdentityChange(buHint, getString(R.string.buttonHintText), Color.GRAY, true)
+            buttonIdentityChange(buHint, getString(R.string.buttonHintText), R.color.colorButtonDisabled, true)
         }
 
         buHint.setOnClickListener {
@@ -159,7 +159,7 @@ class GameFragment : FragmentHandler() {
             hintedButtonID = bot.run(board.fields)
             if(hintedButtonID != -1 && hintedButtonID<=buttons.size-1) {
                 val button = buttons[hintedButtonID]
-                buttonIdentityChange(button, "", Color.YELLOW, true)
+                buttonIdentityChange(button, "", R.color.colorButtonHint, true)
             }
         }
     }
@@ -203,7 +203,7 @@ class GameFragment : FragmentHandler() {
         timer.stopTimer()
         board.restartBoard()
         buttons.forEach {
-            buttonIdentityChange(it, "", Color.WHITE, true)
+            buttonIdentityChange(it, "", R.color.colorBoardButtonDefault, true)
         }
         buHint.isEnabled = true
         updateGameStatusText("Starting: ${getPlayer(board.activePlayer).name}")
@@ -236,7 +236,7 @@ class GameFragment : FragmentHandler() {
      */
     private fun buttonIdentityChange(button: Button, text: String, color: Int, isEnabled: Boolean): Button{
         button.isEnabled = isEnabled
-        button.setBackgroundColor(color)
+        button.setBackgroundColor(resources.getColor(color))
         button.text = text
         return button
     }
@@ -246,8 +246,8 @@ class GameFragment : FragmentHandler() {
      * @return the players field/button color
      */
     private fun getPlayerButtonColor(): Int{
-        if(board.activePlayer==1) return Color.parseColor("#009193")
-        else return Color.parseColor("#FF9300")
+        if(board.activePlayer==1) return R.color.colorBoardButtonPlayerOne
+        else return R.color.colorBoardButtonPlayerTwo
     }
 
     /**
