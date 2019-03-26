@@ -1,17 +1,22 @@
 package no.ab.tictactoev02.Fragments
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.graphics.Color
 import android.os.Bundle
+import android.os.UserManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import no.ab.tictactoev02.Adapter.UsersAdapter
 import no.ab.tictactoev02.Board.BOT.Bot
 import no.ab.tictactoev02.Board.BOT.EasyBot
 import no.ab.tictactoev02.Board.Board
 import no.ab.tictactoev02.Board.BOT.HardBot
-import no.ab.tictactoev02.IO.UserModel
+import no.ab.tictactoev02.IO.UserEntity
+import no.ab.tictactoev02.ViewModel.UserViewModel
 import no.ab.tictactoev02.Player
 import no.ab.tictactoev02.R
 import no.ab.tictactoev02.Timer
@@ -28,13 +33,15 @@ class GameFragment : FragmentHandler() {
 
     //Determines if a button is hinted, if not -1
     var hintedButtonID = -1
-    lateinit var userModel: UserModel
 
     lateinit var player1: Player
     lateinit var player2: Player
     lateinit var difficulty: String
 
     private lateinit var timer: Timer
+
+    private lateinit var userModel: UserViewModel
+    private var allUsers = ArrayList<UserEntity>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,7 +52,6 @@ class GameFragment : FragmentHandler() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         timer = Timer(view)
-        userModel = UserModel(activity!!.application)
         initButtons(view)
         initPlayers()
         board = Board(1)
@@ -82,6 +88,13 @@ class GameFragment : FragmentHandler() {
         buttons.forEach { b -> b.setOnClickListener(buListener) }
 
         updateGameStatusText("Starting: ${getPlayer(board.activePlayer).name}")
+
+        userModel = UserViewModel(activity!!.application)
+        userModel.allUsersLive.observe(this, Observer { liveData ->
+            liveData?.let { data ->
+                allUsers = data.toCollection(ArrayList())
+            }
+        })
     }
 
 
@@ -124,17 +137,49 @@ class GameFragment : FragmentHandler() {
      * If the user dosen't exist, then create it and set either win, draw loose
      */
     private fun insertResultToDatabase() {
-        //val userOne = userModel.getUser("Alexadner")
-        //println(userOne.name)
-        //var userOne = userModel.getUser(us)
         if(board.isWinner){
-            val winningPlayer = getPlayer(board.winner)
-            val loosingPlayer = getPlayer(board.looser)
-
+            val winner = checkIfUserExists(getPlayer(board.winner))
+            val looser = checkIfUserExists(getPlayer(board.looser))
+            insertWithWinner(winner,looser)
         }
         else if(board.isDraw){
-            //userModel.insert(User())
+            val userOne = checkIfUserExists(player1)
+            val userTwo = checkIfUserExists(player2)
+            insertWithDraw(userOne,userTwo)
         }
+    }
+
+    /**
+     * Updates the users in the database with draw
+     */
+    private fun insertWithDraw(userOne: UserEntity, userTwo: UserEntity){
+        userOne.incrementDraw(1)
+        userTwo.incrementDraw(1)
+        userModel.update(userOne)
+        userModel.update(userTwo)
+    }
+
+    /**
+     * Updates the users in the database with either win or loose
+     */
+    private fun insertWithWinner(winner: UserEntity, looser: UserEntity){
+        winner.incrementWin(1)
+        looser.incrementLoose(1)
+        userModel.update(winner)
+        userModel.update(looser)
+    }
+
+    /**
+     * Checks if a player matches a user in database by name and if no user is found
+     * then it will create a new user with the name of that player
+     * @param player Which player we are searching for
+     * @return returns either existing or recently created user
+     */
+    private fun checkIfUserExists(player: Player): UserEntity{
+        allUsers.forEach { if(it.name.equals(player.name)) return it }
+        val newUser = UserEntity(player.name, 0,0,0)
+        userModel.insert(newUser)
+        return newUser
     }
 
 

@@ -1,10 +1,10 @@
 package no.ab.tictactoev02.Activities
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import no.ab.tictactoev02.Fragments.StartPageFragment
 import no.ab.tictactoev02.R
+import no.ab.tictactoev02.ViewModel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,13 +1,15 @@
-package no.ab.tictactoev02.IO
+package no.ab.tictactoev02.ViewModel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.os.AsyncTask
 import kotlinx.coroutines.*
+import no.ab.tictactoev02.IO.UserEntity
+import no.ab.tictactoev02.IO.UserRepository
+import no.ab.tictactoev02.IO.UserRoomDatabase
 import kotlin.coroutines.CoroutineContext
 
-class UserModel(application: Application) : AndroidViewModel(application){
+class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: UserRepository
     val allUsersLive: LiveData<List<UserEntity>>
 
@@ -20,14 +22,6 @@ class UserModel(application: Application) : AndroidViewModel(application){
         repository = UserRepository(userDAO)
         allUsersLive = repository.allUsersLive
     }
-
-
-    fun getAllUsers(list: ArrayList<UserEntity>) = scope.launch(Dispatchers.IO) {
-        repository.getAll().forEach { u -> list.add(u) }
-    }
-
-
-
 
     fun insert(userEntity: UserEntity) = scope.launch(Dispatchers.IO) {
         repository.insert(userEntity)

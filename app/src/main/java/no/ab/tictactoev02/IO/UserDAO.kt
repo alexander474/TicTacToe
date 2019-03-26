@@ -21,9 +21,6 @@ interface UserDAO {
     @Query("SELECT * FROM user_table")
     fun getAllUsersLive() : LiveData<List<UserEntity>>
 
-    @Query("SELECT * FROM user_table")
-    fun getAllUsers() : List<UserEntity>
-
     @Query("SELECT * FROM user_table WHERE name = :name")
     fun getUser(vararg name: String) : UserEntity
 }

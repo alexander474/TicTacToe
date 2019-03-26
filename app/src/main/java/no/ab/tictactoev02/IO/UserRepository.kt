@@ -5,18 +5,7 @@ import android.support.annotation.WorkerThread
 
 class UserRepository(private val userDAO: UserDAO){
     val allUsersLive: LiveData<List<UserEntity>> =  userDAO.getAllUsersLive()
-    //val allUsers: List<UserEntity> = userDAO.getAllUsers()
 
-
-    @WorkerThread
-    suspend fun getUser(name: String): UserEntity{
-        return userDAO.getUser(name)
-    }
-
-    @WorkerThread
-    fun getAll(): List<UserEntity>{
-        return userDAO.getAllUsers()
-    }
 
     @WorkerThread
     suspend fun insert(userEntity: UserEntity){

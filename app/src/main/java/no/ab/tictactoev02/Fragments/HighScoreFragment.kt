@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import no.ab.tictactoev02.IO.UserModel
+import no.ab.tictactoev02.ViewModel.UserViewModel
 import no.ab.tictactoev02.R
 import no.ab.tictactoev02.Adapter.UsersAdapter
 
@@ -22,7 +22,7 @@ class HighScoreFragment : FragmentHandler() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.highscoore_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val userModel = UserModel(activity!!.application)
+        val userModel = UserViewModel(activity!!.application)
 
 
         // Appends all the users in the UsersAdapter to the recyclerView
