@@ -1,6 +1,6 @@
 package no.ab.tictactoev02.Board.BOT
 
-class MiniMax{
+class MiniMaxMedium{
 
     val posibleWinningCoordinates: Array<Array<Int>> = arrayOf(
         arrayOf(0,1,2),

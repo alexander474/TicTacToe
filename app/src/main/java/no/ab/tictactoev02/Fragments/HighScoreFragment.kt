@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import no.ab.tictactoev02.ViewModel.UserViewModel
-import no.ab.tictactoev02.R
 import no.ab.tictactoev02.Adapter.UsersAdapter
+import no.ab.tictactoev02.R
+import no.ab.tictactoev02.ViewModel.UserViewModel
 
 class HighScoreFragment : FragmentHandler() {
 

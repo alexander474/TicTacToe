@@ -3,7 +3,10 @@ package no.ab.tictactoev02.ViewModel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import no.ab.tictactoev02.IO.UserEntity
 import no.ab.tictactoev02.IO.UserRepository
 import no.ab.tictactoev02.IO.UserRoomDatabase

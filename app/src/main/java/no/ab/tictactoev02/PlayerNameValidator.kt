@@ -1,20 +1,14 @@
 package no.ab.tictactoev02
 
+import android.content.Context
 import android.content.res.Resources
 
 
-class PlayerNameValidator{
+class PlayerNameValidator(val context: Context){
 
-
-    fun checkIfNameExists(name: String): Boolean{
-        return false
-    }
-
-    fun checkIfNameIsIllegal(name: String): Boolean{
-        when(name){
-            Resources.getSystem().getString(R.string.BOT_NAME) -> return true
-        }
-        return false
+    fun checkIfNameIsLegal(name: String): Boolean = when(name){
+        context.getString(R.string.BOT_NAME) -> false
+        else -> true
     }
 
 }

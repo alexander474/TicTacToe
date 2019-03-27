@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryBackgroundLight">#ECEFF1</color>
-    <color name="colorPrimaryButtonLight">#FF9F1C</color>
-    <color name="colorPrimaryTextLight">#000000</color>
+    <!-- DefaultTheme -->
+    <color name="defaultPrimary">#008577</color>
+    <color name="defaultPrimaryDark">#00574B</color>
+    <color name="defaultAccent">#D81B60</color>
+    <color name="defaultPrimaryButton">#FF9F1C</color>
+    <color name="defaultPrimaryText">#000000</color>
 
-    <color name="colorPrimaryBackgroundDark">#303030</color>
-    <color name="colorPrimaryButtonDark">#FF9F1C</color>
-    <color name="colorPrimaryTextDark">#FFFFFF</color>
+    <!-- DarkTheme -->
+    <color name="darkPrimary">#212121</color>
+    <color name="darkPrimaryDark">#000000</color>
+    <color name="darkAccent">#D81B60</color>
+    <color name="darkBackground">#212121</color>
+    <color name="darkPrimaryButton">#FF9F1C</color>
+    <color name="darkPrimaryText">#FFFFFF</color>
 
 
+    <!-- BUTTONS -->
     <color name="colorBoardButtonDefault">#FFFFFF</color>
     <color name="colorBoardButtonPlayerOne">#009193</color>
     <color name="colorBoardButtonPlayerTwo">#FF9300</color>

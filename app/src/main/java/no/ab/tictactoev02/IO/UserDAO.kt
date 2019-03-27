@@ -18,9 +18,7 @@ interface UserDAO {
     @Query("DELETE FROM user_table")
     fun deleteAll()
 
-    @Query("SELECT * FROM user_table")
+    @Query("SELECT * FROM user_table ORDER BY win DESC, draw DESC, loose DESC, name DESC")
     fun getAllUsersLive() : LiveData<List<UserEntity>>
 
-    @Query("SELECT * FROM user_table WHERE name = :name")
-    fun getUser(vararg name: String) : UserEntity
 }

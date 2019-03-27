@@ -1,25 +1,23 @@
 package no.ab.tictactoev02.Fragments
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.graphics.Color
 import android.os.Bundle
-import android.os.UserManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import no.ab.tictactoev02.Adapter.UsersAdapter
 import no.ab.tictactoev02.Board.BOT.Bot
 import no.ab.tictactoev02.Board.BOT.EasyBot
-import no.ab.tictactoev02.Board.Board
 import no.ab.tictactoev02.Board.BOT.HardBot
+import no.ab.tictactoev02.Board.BOT.MediumBot
+import no.ab.tictactoev02.Board.Board
 import no.ab.tictactoev02.IO.UserEntity
-import no.ab.tictactoev02.ViewModel.UserViewModel
 import no.ab.tictactoev02.Player
 import no.ab.tictactoev02.R
 import no.ab.tictactoev02.Timer
+import no.ab.tictactoev02.ViewModel.UserViewModel
 
 class GameFragment : FragmentHandler() {
 
@@ -54,17 +52,18 @@ class GameFragment : FragmentHandler() {
         timer = Timer(view)
         initButtons(view)
         initPlayers()
-        board = Board(1)
+        board = Board((1..2).random())
 
         //If player two is bot, then set the bot field
         if(player2.isBot) {
-            when(difficulty){
+            bot = when(difficulty){
                 "EASY" -> EasyBot()
-                "MEDIUM" -> HardBot()
+                "MEDIUM" -> MediumBot()
                 "HARD" -> HardBot()
+                else -> EasyBot()
             }
-            bot = HardBot()
         }else{
+            // If you're not playing against a bot you should not be able to get any hints
             buttonIdentityChange(buHint, getString(R.string.buttonHintText), R.color.colorButtonDisabled, true)
         }
 
@@ -87,6 +86,7 @@ class GameFragment : FragmentHandler() {
         // attaches the listener to each button that represents field
         buttons.forEach { b -> b.setOnClickListener(buListener) }
 
+        //sets the game-status first time the game is loaded
         updateGameStatusText("Starting: ${getPlayer(board.activePlayer).name}")
 
         userModel = UserViewModel(activity!!.application)
@@ -95,6 +95,11 @@ class GameFragment : FragmentHandler() {
                 allUsers = data.toCollection(ArrayList())
             }
         })
+
+        // If the starting player is bot then move the bot when the fragment is loaded
+        if(player2.isBot && board.activePlayer == 2 && !board.gameStarted){
+            handleBotMove()
+        }
     }
 
 
@@ -114,6 +119,9 @@ class GameFragment : FragmentHandler() {
     }
 
 
+    /**
+     * Executor for the bot to move
+     */
     private fun handleBotMove(){
         val fieldID = bot.run(board.fields)
         handleBoardLogic(buttons[fieldID])
@@ -277,7 +285,7 @@ class GameFragment : FragmentHandler() {
     }
 
     /**
-     * Changes the identity of the button (isEnabled, Backgroundcolor and text)
+     * Changes the identity of the button (isEnabled, Background-color and text)
      */
     private fun buttonIdentityChange(button: Button, text: String, color: Int, isEnabled: Boolean): Button{
         button.isEnabled = isEnabled
@@ -296,7 +304,7 @@ class GameFragment : FragmentHandler() {
     }
 
     /**
-     * Initializes the players
+     * Initializes the players with information from the bundle
      */
     private fun initPlayers(){
         var playerOneName = arguments!!.getString("playerOneName")

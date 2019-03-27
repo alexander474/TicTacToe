@@ -8,4 +8,14 @@
     <string name="playerOneChar">X</string>
     <string name="playerTwoChar">O</string>
     <string name="startButtonDescription">Start button</string>
+
+    <!-- MENU -->
+    <string name="menu_main_themes">Themes</string>
+
+    <!-- THEME -->
+    <string name="default_theme">Default</string>
+    <string name="dark_theme">Dark</string>
+    <string name="theme_id">Theme_id</string>
+    <string name="theme_preferences_id">Theme</string>
 </resources>
+

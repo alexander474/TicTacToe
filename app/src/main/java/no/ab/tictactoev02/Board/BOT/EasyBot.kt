@@ -1,8 +1,9 @@
 package no.ab.tictactoev02.Board.BOT
 
-import no.ab.tictactoev02.Board.Board
-
-class EasyBot(): Bot{
+/**
+ * Will draw a move that is based on a bot with difficulty of easy
+ */
+class EasyBot: Bot{
 
     private lateinit var fields: Array<Int>
     private val USERID = 1

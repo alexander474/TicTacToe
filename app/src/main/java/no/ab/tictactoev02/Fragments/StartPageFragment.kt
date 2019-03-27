@@ -11,8 +11,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_start_page.*
+import no.ab.tictactoev02.Activities.MainActivity
+import no.ab.tictactoev02.PlayerNameValidator
 import no.ab.tictactoev02.R
-import no.ab.tictactoev02.Timer
 
 class StartPageFragment : FragmentHandler() {
 
@@ -24,6 +26,8 @@ class StartPageFragment : FragmentHandler() {
     private lateinit var logoText: TextView
     private var isBot = false
     private var difficulty = "none"
+    var playerOneName = ""
+    var playerTwoName = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_start_page, container, false)
@@ -48,11 +52,46 @@ class StartPageFragment : FragmentHandler() {
 
     private fun handleButtonClick(view: View){
         when(view.id){
-            R.id.buStart -> startGame()
+            R.id.buStart -> if(checkNames()) startGame() else makeAlert("Error", "One of the names entered is illegal", view)
             R.id.buHighscoore -> startHighScore()
         }
     }
 
+    /**
+     * General alert with title and message
+     */
+    private fun makeAlert(title: String, message: String, view: View) {
+        AlertDialog.Builder(view.context)
+            .setTitle(title)
+            .setMessage(message)
+            .create()
+            .show()
+    }
+
+    /**
+     * Makes sure that the names of the two players is entered and the names that is entered
+     * is legal. For example naming a player the bot's name will be illegal
+     * @return true if both of the names is legal/valid
+     */
+    private fun checkNames(): Boolean {
+        playerOneName = player1.text.toString().capitalize()
+        playerTwoName = player2.text.toString().capitalize()
+        if(playerOneName.isEmpty()) playerOneName = getString(R.string.playerOneName)
+        if(playerTwoName.isEmpty()) playerTwoName = getString(R.string.playerTwoName)
+
+        val playerNameValidator = PlayerNameValidator(activity!!.application)
+        val p1 = playerNameValidator.checkIfNameIsLegal(playerOneName)
+        var p2 = true
+        if(!isBot) p2 = playerNameValidator.checkIfNameIsLegal(playerTwoName)
+
+        return p1 && p2
+    }
+
+
+    /**
+     * Handles the bot switch and sets the name of the bot if the switch is "checked"
+     * If the switch is checked and then unchecked the default name of player2 will appear
+     */
     private fun enabledBotHandler(view: View, isChecked: Boolean){
         if (isChecked){
             player2.isEnabled = false
@@ -69,6 +108,9 @@ class StartPageFragment : FragmentHandler() {
         }
     }
 
+    /**
+     * Alert that displays the gui where you can choose the difficulty of the bot that the player will play against
+     */
     fun difficultyAlert(view: View){
         val items = resources.getStringArray(R.array.difficultyDialogModes)
         val builder = AlertDialog.Builder(view.context)
@@ -85,13 +127,12 @@ class StartPageFragment : FragmentHandler() {
         pushFragmentWithStack(requireActivity(), R.id.fragment_container, HighScoreFragment())
     }
 
+    /**
+     * Starts the game and sends the data in a bundle to the game-fragment containing all the data
+     */
     private fun startGame(){
         val fragment = GameFragment()
         val bundle = Bundle()
-        var playerOneName = player1.text.toString()
-        var playerTwoName = player2.text.toString()
-        if(playerOneName.isEmpty()) playerOneName = getString(R.string.playerOneName)
-        if(playerTwoName.isEmpty()) playerTwoName = getString(R.string.playerTwoName)
         bundle.putString("playerOneName", playerOneName)
         bundle.putString("playerTwoName", playerTwoName)
         bundle.putString("playerOneChar", getString(R.string.playerOneChar))

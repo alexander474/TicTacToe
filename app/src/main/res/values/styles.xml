@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorBackground">@color/colorPrimaryBackgroundLight</item>
-        <item name="colorButtonNormal">@color/colorPrimaryButtonLight</item>
-        <item name="android:textColor">@color/colorPrimaryTextLight</item>
-        <item name="android:textColorHint">@color/colorPrimaryTextLight</item>
+    <style name="DefaultTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/defaultPrimary</item>
+        <item name="colorPrimaryDark">@color/defaultPrimaryDark</item>
+        <item name="colorAccent">@color/defaultAccent</item>
+
+        <!-- TEXT COLOR -->
+        <item name="android:textColor">@color/defaultPrimaryText</item>
+        <item name="android:textColorPrimary">@color/defaultPrimaryText</item>
+        <item name="android:textColorSecondary">@color/defaultPrimaryText</item>
+        <item name="android:textColorTertiary">@color/defaultPrimaryText</item>
+        <item name="android:textColorPrimaryInverse">@color/defaultPrimaryText</item>
+        <item name="android:textColorSecondaryInverse">@color/defaultPrimaryText</item>
+        <item name="android:textColorTertiaryInverse">@color/defaultPrimaryText</item>
+        <item name="android:textColorHint">@color/defaultPrimaryText</item>
+        <item name="textColorAlertDialogListItem">@color/defaultPrimaryText</item>
+
+        <item name="colorButtonNormal">@color/defaultPrimaryButton</item>
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorBackground">@color/colorPrimaryBackgroundDark</item>
-        <item name="colorButtonNormal">@color/colorPrimaryButtonDark</item>
-        <item name="android:textColor">@color/colorPrimaryTextDark</item>
-        <item name="android:textColorHint">@color/colorPrimaryTextDark</item>
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/darkPrimary</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
+        <item name="colorAccent">@color/darkAccent</item>
+        <item name="android:background">@color/darkBackground</item>
+
+        <!-- TEXT COLOR -->
+        <item name="android:textColor">@color/darkPrimaryText</item>
+        <item name="android:textColorPrimary">@color/darkPrimaryText</item>
+        <item name="android:textColorSecondary">@color/darkPrimaryText</item>
+        <item name="android:textColorTertiary">@color/darkPrimaryText</item>
+        <item name="android:textColorPrimaryInverse">@color/darkPrimaryText</item>
+        <item name="android:textColorSecondaryInverse">@color/darkPrimaryText</item>
+        <item name="android:textColorTertiaryInverse">@color/darkPrimaryText</item>
+        <item name="android:textColorHint">@color/darkPrimaryText</item>
+        <item name="textColorAlertDialogListItem">@color/darkPrimaryText</item>
+
+        <item name="colorButtonNormal">@color/darkPrimaryButton</item>
     </style>
+
+
 
 
 </resources>

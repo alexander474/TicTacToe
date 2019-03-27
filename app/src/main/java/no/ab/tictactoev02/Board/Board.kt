@@ -67,7 +67,8 @@ class Board(private val startingPlayer: Int = 1){
 
     fun restartBoard(){
         fields = Array(9) {0}
-        //activePlayer = startingPlayer
+        // If there is a looser, then set the looser to draw first at next game
+        if(looser != -1) activePlayer = looser
         gameStarted = false
         isFullBoard = false
         isDraw = false
@@ -75,6 +76,7 @@ class Board(private val startingPlayer: Int = 1){
         winner = -1
         looser = -1
     }
+
 
     private fun checkForWinner(): Boolean{
         checkFieldsForWinner(1)
